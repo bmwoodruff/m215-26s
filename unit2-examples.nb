@@ -1,0 +1,380 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     13166,        372]
+NotebookOptionsPosition[     11400,        339]
+NotebookOutlinePosition[     11829,        356]
+CellTagsIndexPosition[     11786,        353]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Work Integrals (2.23)", "Section",
+ CellChangeTimes->{{3.987172603438587*^9, 3.9871726086204987`*^9}, {
+  3.987176678266102*^9, 
+  3.9871766804156017`*^9}},ExpressionUUID->"102c17f5-97f3-404b-85dc-\
+48b5e027c302"],
+
+Cell["\<\
+The symbol @ is used for function composition.  So instead of writing r[4], I \
+could write r@4 (think r at 4).  However, if the function has a vector as \
+input (such as F[x,y]), then you have to use two at symbols, so use F@@{x,y}. \
+ \
+\>", "Text",
+ CellChangeTimes->{{3.987176706971653*^9, 
+  3.987176789995287*^9}},ExpressionUUID->"c8a77552-fc0f-8d45-8dbb-\
+34cb7ec04e07"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"r", "[", "t_", "]"}], ":=", 
+  RowBox[{"t", "^", "2"}]}], "\[IndentingNewLine]", 
+ RowBox[{"r", "[", "4", "]"}], "\[IndentingNewLine]", 
+ RowBox[{"r", "@", "4"}]}], "Input",
+ CellChangeTimes->{{3.9871767932135735`*^9, 3.987176806453039*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"d53efa02-dd13-424e-8043-04ad030ceeda"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"F", "[", 
+   RowBox[{"x_", ",", "y_"}], "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", "2"}], "y"}], ",", 
+    RowBox[{"2", "x"}]}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{"F", "@@", 
+  RowBox[{"{", 
+   RowBox[{"x", ",", "y"}], "}"}]}]}], "Input",
+ CellChangeTimes->{{3.987176818354368*^9, 3.9871768224117393`*^9}},
+ CellLabel->
+  "In[170]:=",ExpressionUUID->"bbf5311f-e317-3e4a-a2d4-2aad4b2705fa"],
+
+Cell["We can now compute work. ", "Text",
+ CellChangeTimes->{{3.987176832338009*^9, 
+  3.987176852664768*^9}},ExpressionUUID->"8f994f8f-71f1-214e-8092-\
+b8cb2bdd66b8"],
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", 
+  RowBox[{"r", ",", "F", ",", "t"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"r", "[", "t_", "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"3", 
+     RowBox[{"Cos", "[", "t", "]"}]}], ",", 
+    RowBox[{"3", 
+     RowBox[{"Sin", "[", "t", "]"}]}]}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"tMin", ",", "tMax"}], "}"}], "=", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", 
+     RowBox[{"2", "Pi"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"F", "[", 
+    RowBox[{"x_", ",", "y_"}], "]"}], ":=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "2"}], "y"}], ",", 
+     RowBox[{"2", "x"}]}], "}"}]}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"F", "@@", 
+   RowBox[{"r", "@", "t"}]}], "  ", 
+  RowBox[{"(*", 
+   RowBox[{"Compose", " ", "F", 
+    RowBox[{"(", 
+     RowBox[{"r", 
+      RowBox[{"(", "t", ")"}]}], ")"}]}], "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"r", "'"}], "[", "t", "]"}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"dW", "=", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{"F", "@@", 
+     RowBox[{"r", "@", "t"}]}], ")"}], ".", 
+   RowBox[{
+    RowBox[{"r", "'"}], "[", "t", "]"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Integrate", "[", 
+   RowBox[{"dW", ",", 
+    RowBox[{"{", 
+     RowBox[{"t", ",", "tMin", ",", "tMax"}], "}"}]}], "]"}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"vectorPlot", "=", 
+   RowBox[{"VectorPlot", "[", 
+    RowBox[{
+     RowBox[{"F", "[", 
+      RowBox[{"x", ",", "y"}], "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"x", ",", 
+       RowBox[{"-", "4"}], ",", "4"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"y", ",", 
+       RowBox[{"-", "4"}], ",", "4"}], "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"curvePlot", "=", 
+   RowBox[{"ParametricPlot", "[", 
+    RowBox[{
+     RowBox[{"r", "[", "t", "]"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "tMin", ",", "tMax"}], "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Show", "[", 
+  RowBox[{"vectorPlot", ",", "curvePlot"}], "]"}]}], "Input",
+ CellChangeTimes->{{3.9871726102615566`*^9, 3.987172757162163*^9}, {
+  3.9871727970721054`*^9, 3.9871728227834606`*^9}, {3.987176858635071*^9, 
+  3.9871770290772743`*^9}, {3.9871771706161385`*^9, 3.987177172673519*^9}},
+ CellLabel->"In[4]:=",ExpressionUUID->"f06648ab-d2b7-3445-92f8-881f1311307b"],
+
+Cell["\<\
+Here\[CloseCurlyQuote]s an example that shows the setup and result, using \
+Inactive and Activate.\
+\>", "Text",
+ CellChangeTimes->{{3.9871770334217834`*^9, 3.987177074799904*^9}, {
+  3.987177120956278*^9, 
+  3.9871771362981377`*^9}},ExpressionUUID->"0a36bda4-3272-d649-87ed-\
+2ab57ffd71d6"],
+
+Cell[BoxData[{
+ RowBox[{"ClearAll", "[", 
+  RowBox[{"r", ",", "F", ",", "t"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"r", "[", "t_", "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"3", 
+     RowBox[{"Cos", "[", "t", "]"}]}], ",", 
+    RowBox[{"3", 
+     RowBox[{"Sin", "[", "t", "]"}]}]}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"tMin", ",", "tMax"}], "}"}], "=", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", 
+     RowBox[{"2", "Pi"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"F", "[", 
+    RowBox[{"x_", ",", "y_"}], "]"}], ":=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "2"}], "y"}], ",", 
+     RowBox[{"2", "x"}]}], "}"}]}], "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dW", "=", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"F", "@@", 
+      RowBox[{"r", "@", "t"}]}], ")"}], ".", 
+    RowBox[{
+     RowBox[{"r", "'"}], "[", "t", "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"setup", "=", 
+   RowBox[{
+    RowBox[{"Inactive", "[", "Integrate", "]"}], "[", 
+    RowBox[{"dW", ",", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "tMin", ",", "tMax"}], "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"setup", "==", 
+  RowBox[{"Activate", "[", "setup", "]"}]}]}], "Input",
+ CellChangeTimes->{{3.987177060515278*^9, 3.9871771094044113`*^9}, {
+  3.9871771616030807`*^9, 3.987177163704996*^9}},
+ CellLabel->
+  "In[234]:=",ExpressionUUID->"85872a76-52a2-2041-9ab4-d4880af78573"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Arc Length Integrals (2.21)", "Section",
+ CellChangeTimes->{{3.987172586416609*^9, 3.9871725965601273`*^9}, {
+  3.9871766906280994`*^9, 
+  3.987176690706993*^9}},ExpressionUUID->"3cd0b75d-654e-d446-bc34-\
+1bba280f90b0"],
+
+Cell["\<\
+The underscore below is required when defining a function. 
+We can compute lengths of vectors using Norm. 
+You\[CloseCurlyQuote]ll see names appear in this and other classes, rather \
+than a number.  These are special functions.  The question you asked software \
+to compute has no known simple form, but matches a pattern (the name you \
+see). The name just means you hit a problem that others have seen before and \
+decided to name the pattern.  You can always approximate the solution using \
+N. \
+\>", "Text",
+ CellChangeTimes->{{3.9871771863459816`*^9, 3.987177219144146*^9}, {
+  3.987177356764225*^9, 
+  3.9871774791847496`*^9}},ExpressionUUID->"2f7277a2-b7b5-254e-bb3f-\
+e0ad2d3fd24a"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"r", "[", "t_", "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{"t", ",", 
+    RowBox[{"t", "^", "2"}]}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{"ds", "=", 
+  RowBox[{"Norm", "[", 
+   RowBox[{
+    RowBox[{"r", "'"}], "[", "t", "]"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"sol", "=", 
+  RowBox[{"Integrate", "[", 
+   RowBox[{"ds", ",", 
+    RowBox[{"{", 
+     RowBox[{"t", ",", "0", ",", "3"}], "}"}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"%", "//", "N"}]}], "Input",
+ CellChangeTimes->{{3.98716888839662*^9, 3.987168895009968*^9}, {
+  3.9871689779127827`*^9, 3.9871689808897896`*^9}, {3.9871723805480404`*^9, 
+  3.987172443703039*^9}, {3.987172552113056*^9, 3.9871725626694717`*^9}, {
+  3.9871730793120365`*^9, 3.987173183203907*^9}, {3.9871773021997795`*^9, 
+  3.9871773034014816`*^9}},
+ CellLabel->
+  "In[264]:=",ExpressionUUID->"7eeda67d-f608-9246-b843-cfe22f4df375"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"r", "[", "t_", "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"4", 
+     RowBox[{"Cos", "[", "t", "]"}]}], ",", 
+    RowBox[{"5", 
+     RowBox[{"Sin", "[", "t", "]"}]}]}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{"ds", "=", 
+  RowBox[{"Norm", "[", 
+   RowBox[{
+    RowBox[{"r", "'"}], "[", "t", "]"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Integrate", "[", 
+  RowBox[{
+   RowBox[{"Norm", "[", 
+    RowBox[{
+     RowBox[{"r", "'"}], "[", "t", "]"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", "0", ",", 
+     RowBox[{"2", "Pi"}]}], "}"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.987168804802696*^9, 3.987168873145424*^9}, {
+   3.9871719661083565`*^9, 3.987171966796545*^9}, {3.987172567376646*^9, 
+   3.9871725690451927`*^9}, 3.987173208337738*^9},
+ CellLabel->
+  "In[157]:=",ExpressionUUID->"dd20ca7d-f003-034f-a015-951b7956a53e"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"r", "[", "t_", "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"Sec", "[", "t", "]"}], ",", 
+    RowBox[{"Tan", "[", "t", "]"}]}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{"ds", "=", 
+  RowBox[{"Norm", "[", 
+   RowBox[{
+    RowBox[{"r", "'"}], "[", "t", "]"}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"Integrate", "[", 
+  RowBox[{
+   RowBox[{"Norm", "[", 
+    RowBox[{
+     RowBox[{"r", "'"}], "[", "t", "]"}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"t", ",", 
+     RowBox[{
+      RowBox[{"-", "Pi"}], "/", "4"}], ",", 
+     RowBox[{"Pi", "/", "4"}]}], "}"}]}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{"%", "//", "N"}]}], "Input",
+ CellChangeTimes->{{3.987168910690323*^9, 3.9871689253401966`*^9}, {
+  3.9871689868609943`*^9, 3.9871689891682873`*^9}, {3.9871725739591923`*^9, 
+  3.9871725747644253`*^9}, {3.9871734047846584`*^9, 3.987173406161724*^9}},
+ CellLabel->
+  "In[163]:=",ExpressionUUID->"85823151-fb4a-f040-b826-145226352588"],
+
+Cell["Here\[CloseCurlyQuote]s an example that uses Inactive to show the \
+setup. ", "Text",
+ CellChangeTimes->{{3.9871772397698402`*^9, 
+  3.9871772551704082`*^9}},ExpressionUUID->"9da4b897-5fd9-c540-a79f-\
+7d3f6646d66b"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"r", "[", "t_", "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{"t", ",", 
+    RowBox[{"t", "^", "2"}]}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ds", "=", 
+   RowBox[{"Norm", "[", 
+    RowBox[{
+     RowBox[{"r", "'"}], "[", "t", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"setup", "=", 
+   RowBox[{
+    RowBox[{"Inactive", "[", "Integrate", "]"}], "[", 
+    RowBox[{"ds", ",", 
+     RowBox[{"{", 
+      RowBox[{"t", ",", "0", ",", "3"}], "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"setup", "==", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"Activate", "[", "setup", "]"}], "//", "N"}], ")"}]}]}], "Input",
+ CellChangeTimes->{{3.9871772584367085`*^9, 3.98717732295673*^9}},
+ CellLabel->
+  "In[272]:=",ExpressionUUID->"6ebefebc-0624-1345-b1ce-f02ccef927e9"]
+}, Open  ]]
+},
+WindowSize->{1428, 735.75},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+Magnification:>1.7 Inherited,
+FrontEndVersion->"14.3 for Microsoft Windows (64-bit) (July 8, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"04d7e999-2ec8-e142-a36d-f944e9d9d656"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 219, 4, 112, "Section",ExpressionUUID->"102c17f5-97f3-404b-85dc-48b5e027c302"],
+Cell[798, 28, 387, 8, 94, "Text",ExpressionUUID->"c8a77552-fc0f-8d45-8dbb-34cb7ec04e07"],
+Cell[1188, 38, 355, 7, 112, "Input",ExpressionUUID->"d53efa02-dd13-424e-8043-04ad030ceeda"],
+Cell[1546, 47, 463, 14, 80, "Input",ExpressionUUID->"bbf5311f-e317-3e4a-a2d4-2aad4b2705fa"],
+Cell[2012, 63, 167, 3, 57, "Text",ExpressionUUID->"8f994f8f-71f1-214e-8092-b8cb2bdd66b8"],
+Cell[2182, 68, 2533, 75, 468, "Input",ExpressionUUID->"f06648ab-d2b7-3445-92f8-881f1311307b"],
+Cell[4718, 145, 301, 7, 57, "Text",ExpressionUUID->"0a36bda4-3272-d649-87ed-2ab57ffd71d6"],
+Cell[5022, 154, 1539, 47, 274, "Input",ExpressionUUID->"85872a76-52a2-2041-9ab4-d4880af78573"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6598, 206, 225, 4, 112, "Section",ExpressionUUID->"3cd0b75d-654e-d446-bc34-1bba280f90b0"],
+Cell[6826, 212, 702, 13, 243, "Text",ExpressionUUID->"2f7277a2-b7b5-254e-bb3f-e0ad2d3fd24a"],
+Cell[7531, 227, 913, 22, 145, "Input",ExpressionUUID->"7eeda67d-f608-9246-b843-cfe22f4df375"],
+Cell[8447, 251, 890, 25, 112, "Input",ExpressionUUID->"dd20ca7d-f003-034f-a015-951b7956a53e"],
+Cell[9340, 278, 983, 26, 145, "Input",ExpressionUUID->"85823151-fb4a-f040-b826-145226352588"],
+Cell[10326, 306, 221, 4, 57, "Text",ExpressionUUID->"9da4b897-5fd9-c540-a79f-7d3f6646d66b"],
+Cell[10550, 312, 834, 24, 145, "Input",ExpressionUUID->"6ebefebc-0624-1345-b1ce-f02ccef927e9"]
+}, Open  ]]
+}
+]
+*)
+
