@@ -1,0 +1,585 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.3' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     23063,        577]
+NotebookOptionsPosition[     20744,        534]
+NotebookOutlinePosition[     21177,        551]
+CellTagsIndexPosition[     21134,        548]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Initialization Cells", "Section",
+ CellChangeTimes->{{3.9888269757273293`*^9, 
+  3.9888269811452904`*^9}},ExpressionUUID->"6331bc7f-794d-e24b-880f-\
+b2703942bf69"],
+
+Cell["\<\
+Create a plot in the r\[Theta]-plane. It\[CloseCurlyQuote]s not very \
+exciting, but the color scheme setup is there to match the transformed \
+versions later. \
+\>", "Text",
+ CellChangeTimes->{{3.988827083064625*^9, 3.98882711395253*^9}, 
+   3.988827174775156*^9},ExpressionUUID->"eff09e15-2ed3-9541-9235-\
+17649cc27581"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"r\[Theta]Plot", "[", 
+   RowBox[{"maxr_", ",", "max\[Theta]_", ",", "dr_", ",", "d\[Theta]_"}], 
+   "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{"ParametricPlot", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"\[Theta]", ",", "r"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"r", ",", "0", ",", "maxr"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\[Theta]", ",", "0", ",", "max\[Theta]"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Mesh", "->", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Ceiling", "[", 
+         RowBox[{"maxr", "/", "dr"}], "]"}], "-", "1"}], ",", 
+       RowBox[{
+        RowBox[{"Ceiling", "[", 
+         RowBox[{"max\[Theta]", "/", "d\[Theta]"}], "]"}], "-", "1"}]}], 
+      "}"}]}], ",", "\[IndentingNewLine]", 
+    RowBox[{"MeshStyle", "->", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"Thick", ",", "Blue"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"Thick", ",", "Red"}], "}"}]}], "}"}]}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"MeshShading", "->", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"None", ",", "None"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"None", ",", "None"}], "}"}]}], "}"}]}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"AxesLabel", "->", 
+     RowBox[{"{", 
+      RowBox[{"\"\<\[Theta]\>\"", ",", "\"\<r\>\""}], "}"}]}]}], 
+   "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.9888232640144672`*^9, 3.9888232760189896`*^9}, {
+   3.9888233973904495`*^9, 3.988823642026745*^9}, {3.988823773285013*^9, 
+   3.988823814973837*^9}, {3.9888243561628857`*^9, 3.9888243676523514`*^9}, 
+   3.988824419418127*^9, {3.9888244526207085`*^9, 3.9888245214152794`*^9}, {
+   3.9888245712433167`*^9, 3.9888245970063477`*^9}, {3.988824628522686*^9, 
+   3.9888246568898907`*^9}, {3.988824752538809*^9, 3.9888249392543545`*^9}, {
+   3.988825221266468*^9, 3.988825226581829*^9}, {3.9888252673057823`*^9, 
+   3.988825276604927*^9}, {3.9888253880294495`*^9, 3.9888253913458614`*^9}, {
+   3.9888267385253944`*^9, 3.988826796173464*^9}, {3.9888269602216682`*^9, 
+   3.9888269875001717`*^9}},ExpressionUUID->"8db93630-5173-cd42-8048-\
+24e6819678fc"],
+
+Cell["\<\
+We want to track how a box in the r\[Theta]-plane transformed in the xy \
+plane.  So let\[CloseCurlyQuote]s draw the edges of that box. \
+\>", "Text",
+ CellChangeTimes->{{3.9888271184519444`*^9, 3.988827143364319*^9}, 
+   3.988827178041483*^9},ExpressionUUID->"277e983b-1acd-764f-be29-\
+0d2fad34e372"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"originalBox", "[", 
+   RowBox[{"r_", ",", "\[Theta]_", ",", "dr_", ",", "d\[Theta]_"}], "]"}], ":=",
+   "\[IndentingNewLine]", 
+  RowBox[{"Graphics", "[", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{"Red", ",", 
+     RowBox[{"Arrow", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"\[Theta]", ",", "r"}], "}"}], ",", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"\[Theta]", ",", "r"}], "}"}], "+", 
+         RowBox[{"{", 
+          RowBox[{"0", ",", "dr"}], "}"}]}]}], "}"}], "]"}], ",", 
+     "\[IndentingNewLine]", "Blue", ",", 
+     RowBox[{"Arrow", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"\[Theta]", ",", "r"}], "}"}], ",", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"\[Theta]", ",", "r"}], "}"}], "+", 
+         RowBox[{"{", 
+          RowBox[{"d\[Theta]", ",", "0"}], "}"}]}]}], "}"}], "]"}], ",", 
+     "\[IndentingNewLine]", "Purple", ",", 
+     RowBox[{"Opacity", "[", "0.2", "]"}], ",", 
+     RowBox[{"Parallelogram", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"\[Theta]", ",", "r"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"0", ",", "dr"}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"d\[Theta]", ",", "0"}], "}"}]}], "}"}]}], "]"}]}], 
+    "\[IndentingNewLine]", "}"}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.9888232640144672`*^9, 3.9888232760189896`*^9}, {
+   3.9888233973904495`*^9, 3.988823642026745*^9}, {3.988823773285013*^9, 
+   3.988823814973837*^9}, {3.9888243561628857`*^9, 3.9888243676523514`*^9}, 
+   3.988824419418127*^9, {3.9888244526207085`*^9, 3.9888245214152794`*^9}, {
+   3.9888245712433167`*^9, 3.9888245970063477`*^9}, {3.988824628522686*^9, 
+   3.9888246568898907`*^9}, {3.988824752538809*^9, 3.9888249392543545`*^9}, {
+   3.988825221266468*^9, 3.988825226581829*^9}, {3.9888252673057823`*^9, 
+   3.988825276604927*^9}, {3.9888253880294495`*^9, 3.9888253913458614`*^9}, {
+   3.9888267385253944`*^9, 3.988826796173464*^9}, {3.9888269602216682`*^9, 
+   3.9888269897440395`*^9}},ExpressionUUID->"ee8239b3-dcf6-5c46-b965-\
+a10b241a9ce0"],
+
+Cell["\<\
+Now we create the transformed region in the xy-plane, with coloring to match \
+the r\[Theta]-plane.\
+\>", "Text",
+ CellChangeTimes->{{3.988827147441086*^9, 
+  3.9888271715303593`*^9}},ExpressionUUID->"0d395891-b440-8e49-a9d3-\
+7a3e59d5e09f"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"xyPlot", "[", 
+   RowBox[{"maxr_", ",", "max\[Theta]_", ",", "dr_", ",", "d\[Theta]_"}], 
+   "]"}], ":=", "\[IndentingNewLine]", 
+  RowBox[{"ParametricPlot", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"r", " ", 
+       RowBox[{"Cos", "[", "\[Theta]", "]"}]}], ",", 
+      RowBox[{"r", " ", 
+       RowBox[{"Sin", "[", "\[Theta]", "]"}]}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"r", ",", "0", ",", "maxr"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\[Theta]", ",", "0", ",", "max\[Theta]"}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Mesh", "->", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"Ceiling", "[", 
+         RowBox[{"maxr", "/", "dr"}], "]"}], "-", "1"}], ",", 
+       RowBox[{
+        RowBox[{"Ceiling", "[", 
+         RowBox[{"max\[Theta]", "/", "d\[Theta]"}], "]"}], "-", "1"}]}], 
+      "}"}]}], ",", "\[IndentingNewLine]", 
+    RowBox[{"MeshStyle", "->", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"Thick", ",", "Blue"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"Thick", ",", "Red"}], "}"}]}], "}"}]}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"MeshShading", "->", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"None", ",", "None"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"None", ",", "None"}], "}"}]}], "}"}]}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"AxesLabel", "->", 
+     RowBox[{"{", 
+      RowBox[{"\"\<x\>\"", ",", "\"\<y\>\""}], "}"}]}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.9888232640144672`*^9, 3.9888232760189896`*^9}, {
+   3.9888233973904495`*^9, 3.988823642026745*^9}, {3.988823773285013*^9, 
+   3.988823814973837*^9}, {3.9888243561628857`*^9, 3.9888243676523514`*^9}, 
+   3.988824419418127*^9, {3.9888244526207085`*^9, 3.9888245214152794`*^9}, {
+   3.9888245712433167`*^9, 3.9888245970063477`*^9}, {3.988824628522686*^9, 
+   3.9888246568898907`*^9}, {3.988824752538809*^9, 3.9888249392543545`*^9}, {
+   3.988825221266468*^9, 3.988825226581829*^9}, {3.9888252673057823`*^9, 
+   3.988825276604927*^9}, {3.9888253880294495`*^9, 3.9888253913458614`*^9}, {
+   3.9888267385253944`*^9, 3.988826796173464*^9}, {3.9888269602216682`*^9, 
+   3.988826991757866*^9}},ExpressionUUID->"e2abfa22-a417-3f4d-beba-\
+19ded7000156"],
+
+Cell["\<\
+These helper function make creating the transformed parallelogram simpler. \
+\>", "Text",
+ CellChangeTimes->{{3.988827183229088*^9, 
+  3.988827203311037*^9}},ExpressionUUID->"c8b9f74b-77c6-3d4f-a573-\
+8afcd4db5d2e"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"xycoord", "[", 
+   RowBox[{"r_", ",", "\[Theta]_"}], "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"r", " ", 
+     RowBox[{"Cos", "[", "\[Theta]", "]"}]}], ",", 
+    RowBox[{"r", " ", 
+     RowBox[{"Sin", "[", "\[Theta]", "]"}]}]}], "}"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"changeinr", "[", 
+   RowBox[{"r_", ",", "\[Theta]_", ",", "dr_", ",", "d\[Theta]_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"Cos", "[", "\[Theta]", "]"}], ",", 
+     RowBox[{"Sin", "[", "\[Theta]", "]"}]}], "}"}], "dr"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"changein\[Theta]", "[", 
+   RowBox[{"r_", ",", "\[Theta]_", ",", "dr_", ",", "d\[Theta]_"}], "]"}], ":=", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"-", "r"}], " ", 
+      RowBox[{"Sin", "[", "\[Theta]", "]"}]}], ",", 
+     RowBox[{"r", " ", 
+      RowBox[{"Cos", "[", "\[Theta]", "]"}]}]}], "}"}], 
+   "d\[Theta]"}]}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.9888232640144672`*^9, 3.9888232760189896`*^9}, {
+   3.9888233973904495`*^9, 3.988823642026745*^9}, {3.988823773285013*^9, 
+   3.988823814973837*^9}, {3.9888243561628857`*^9, 3.9888243676523514`*^9}, 
+   3.988824419418127*^9, {3.9888244526207085`*^9, 3.9888245214152794`*^9}, {
+   3.9888245712433167`*^9, 3.9888245970063477`*^9}, {3.988824628522686*^9, 
+   3.9888246568898907`*^9}, {3.988824752538809*^9, 3.9888249392543545`*^9}, {
+   3.988825221266468*^9, 3.988825226581829*^9}, {3.9888252673057823`*^9, 
+   3.988825276604927*^9}, {3.9888253880294495`*^9, 3.9888253913458614`*^9}, {
+   3.9888267385253944`*^9, 3.988826796173464*^9}, {3.9888269602216682`*^9, 
+   3.988827001400255*^9}},ExpressionUUID->"c73ff5e9-3990-a747-92ed-\
+75fe65a5271a"],
+
+Cell["\<\
+Now create the parallelogram that we\[CloseCurlyQuote]re using to approximate \
+the actual transformed sector, as well as the transformed sector. \
+\>", "Text",
+ CellChangeTimes->{{3.9888272070749207`*^9, 
+  3.988827243556759*^9}},ExpressionUUID->"a06dac0d-18ed-2d4e-a8d5-\
+c611d44b08cb"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"transformedBox", "[", 
+   RowBox[{"r_", ",", "\[Theta]_", ",", "dr_", ",", "d\[Theta]_"}], "]"}], ":=",
+   "\[IndentingNewLine]", 
+  RowBox[{"Graphics", "[", 
+   RowBox[{"{", "\[IndentingNewLine]", 
+    RowBox[{"Red", ",", 
+     RowBox[{"Arrow", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"xycoord", "[", 
+         RowBox[{"r", ",", "\[Theta]"}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"xycoord", "[", 
+          RowBox[{"r", ",", "\[Theta]"}], "]"}], "+", 
+         RowBox[{"changeinr", "[", 
+          RowBox[{"r", ",", "\[Theta]", ",", "dr", ",", "d\[Theta]"}], 
+          "]"}]}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", "Blue", ",", 
+     RowBox[{"Arrow", "[", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"xycoord", "[", 
+         RowBox[{"r", ",", "\[Theta]"}], "]"}], ",", 
+        RowBox[{
+         RowBox[{"xycoord", "[", 
+          RowBox[{"r", ",", "\[Theta]"}], "]"}], "+", 
+         RowBox[{"changein\[Theta]", "[", 
+          RowBox[{"r", ",", "\[Theta]", ",", "dr", ",", "d\[Theta]"}], 
+          "]"}]}]}], "}"}], "]"}], ",", "\[IndentingNewLine]", "Purple", ",", 
+     RowBox[{"Opacity", "[", "0.2", "]"}], ",", 
+     RowBox[{"Parallelogram", "[", 
+      RowBox[{
+       RowBox[{"xycoord", "[", 
+        RowBox[{"r", ",", "\[Theta]"}], "]"}], ",", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"changeinr", "[", 
+          RowBox[{"r", ",", "\[Theta]", ",", "dr", ",", "d\[Theta]"}], "]"}], 
+         ",", 
+         RowBox[{"changein\[Theta]", "[", 
+          RowBox[{"r", ",", "\[Theta]", ",", "dr", ",", "d\[Theta]"}], 
+          "]"}]}], "}"}]}], "]"}]}], "\[IndentingNewLine]", "}"}], 
+   "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.9888232640144672`*^9, 3.9888232760189896`*^9}, {
+   3.9888233973904495`*^9, 3.988823642026745*^9}, {3.988823773285013*^9, 
+   3.988823814973837*^9}, {3.9888243561628857`*^9, 3.9888243676523514`*^9}, 
+   3.988824419418127*^9, {3.9888244526207085`*^9, 3.9888245214152794`*^9}, {
+   3.9888245712433167`*^9, 3.9888245970063477`*^9}, {3.988824628522686*^9, 
+   3.9888246568898907`*^9}, {3.988824752538809*^9, 3.9888249392543545`*^9}, {
+   3.988825221266468*^9, 3.988825226581829*^9}, {3.9888252673057823`*^9, 
+   3.988825276604927*^9}, {3.9888253880294495`*^9, 3.9888253913458614`*^9}, {
+   3.9888267385253944`*^9, 3.988826796173464*^9}, {3.9888269602216682`*^9, 
+   3.988827001400255*^9}},ExpressionUUID->"3a44f58d-144e-334f-bc1d-\
+7cc00711d580"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"transformedSector", "[", 
+   RowBox[{"r0_", ",", "\[Theta]0_", ",", "dr_", ",", "d\[Theta]_"}], "]"}], ":=",
+   "\[IndentingNewLine]", 
+  RowBox[{"ParametricPlot", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"r", " ", 
+       RowBox[{"Cos", "[", "\[Theta]", "]"}]}], ",", 
+      RowBox[{"r", " ", 
+       RowBox[{"Sin", "[", "\[Theta]", "]"}]}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"r", ",", "r0", ",", 
+      RowBox[{"r0", "+", "dr"}]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"\[Theta]", ",", "\[Theta]0", ",", 
+      RowBox[{"\[Theta]0", "+", "d\[Theta]"}]}], "}"}]}], "]"}]}]], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.9888232640144672`*^9, 3.9888232760189896`*^9}, {
+   3.9888233973904495`*^9, 3.988823642026745*^9}, {3.988823773285013*^9, 
+   3.988823814973837*^9}, {3.9888243561628857`*^9, 3.9888243676523514`*^9}, 
+   3.988824419418127*^9, {3.9888244526207085`*^9, 3.9888245214152794`*^9}, {
+   3.9888245712433167`*^9, 3.9888245970063477`*^9}, {3.988824628522686*^9, 
+   3.9888246568898907`*^9}, {3.988824752538809*^9, 3.9888249392543545`*^9}, {
+   3.988825221266468*^9, 3.988825226581829*^9}, {3.9888252673057823`*^9, 
+   3.988825276604927*^9}, {3.9888253880294495`*^9, 3.9888253913458614`*^9}, {
+   3.9888267385253944`*^9, 3.988826796173464*^9}, {3.9888269602216682`*^9, 
+   3.9888269999548893`*^9}},ExpressionUUID->"5c6e4362-ad8b-ab4e-9b6f-\
+4f2a469c29e0"]
+}, Closed]],
+
+Cell[CellGroupData[{
+
+Cell["Visuals", "Section",
+ CellChangeTimes->{{3.988827013514118*^9, 
+  3.988827014246132*^9}},ExpressionUUID->"a853d71b-dac3-7e43-ad73-\
+b36cc139d69f"],
+
+Cell["First let\[CloseCurlyQuote]s view what happens in the r\[Theta] plane. \
+", "Text",
+ CellChangeTimes->{{3.988827020548462*^9, 
+  3.9888270410770874`*^9}},ExpressionUUID->"19d4319a-13a4-ad4d-aaba-\
+e5fd720c8b19"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Show", "[", 
+    RowBox[{
+     RowBox[{"r\[Theta]Plot", "[", 
+      RowBox[{"5", ",", 
+       RowBox[{"2", "Pi"}], ",", "dr", ",", "d\[Theta]"}], "]"}], ",", 
+     RowBox[{"originalBox", "[", 
+      RowBox[{"r", ",", "\[Theta]", ",", "dr", ",", "d\[Theta]"}], "]"}]}], 
+    "]"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Theta]", ",", 
+       RowBox[{"Pi", "/", "3"}]}], "}"}], ",", "0", ",", 
+     RowBox[{"2", "Pi"}]}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "2"}], "}"}], ",", "0", ",", "5"}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"dr", ",", "1"}], "}"}], ",", "0.01", ",", "1"}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"d\[Theta]", ",", 
+       RowBox[{"Pi", "/", "6"}]}], "}"}], ",", "0.01", ",", 
+     RowBox[{"Pi", "/", "3"}]}], "}"}]}], "\[IndentingNewLine]", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.9888254771063194`*^9, 3.988825479622034*^9}, {
+  3.988826607853735*^9, 3.9888266229681835`*^9}, {3.988826843618561*^9, 
+  3.988826845136669*^9}},
+ CellLabel->"In[84]:=",ExpressionUUID->"c6d6d049-dfc4-284a-8974-00a1f08cf6f8"],
+
+Cell["Now let\[CloseCurlyQuote]s view the corresponding image in the \
+xy-plane.", "Text",
+ CellChangeTimes->{{3.988827049396969*^9, 
+  3.988827067584818*^9}},ExpressionUUID->"7230eecd-f850-b643-a77c-\
+5c0638fd840a"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Show", "[", 
+    RowBox[{
+     RowBox[{"xyPlot", "[", 
+      RowBox[{"5", ",", 
+       RowBox[{"2", "Pi"}], ",", "dr", ",", "d\[Theta]"}], "]"}], ",", 
+     RowBox[{"transformedSector", "[", 
+      RowBox[{"r", ",", "\[Theta]", ",", "dr", ",", "d\[Theta]"}], "]"}], ",", 
+     RowBox[{"transformedBox", "[", 
+      RowBox[{"r", ",", "\[Theta]", ",", "dr", ",", "d\[Theta]"}], "]"}]}], 
+    "]"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Theta]", ",", 
+       RowBox[{"Pi", "/", "3"}]}], "}"}], ",", "0", ",", 
+     RowBox[{"2", "Pi"}]}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "2"}], "}"}], ",", "0", ",", "5"}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"dr", ",", "1"}], "}"}], ",", "0.01", ",", "1"}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"d\[Theta]", ",", 
+       RowBox[{"Pi", "/", "6"}]}], "}"}], ",", "0.01", ",", 
+     RowBox[{"Pi", "/", "3"}]}], "}"}]}], "\[IndentingNewLine]", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.9888255003855953`*^9, 3.9888255115844707`*^9}, {
+  3.988825834573139*^9, 3.9888258464251785`*^9}, {3.988826640202057*^9, 
+  3.9888266518247223`*^9}, {3.9888268249858246`*^9, 3.9888268520610867`*^9}},
+ CellLabel->"In[81]:=",ExpressionUUID->"67774e63-230d-b944-b387-23e9cce9f0ae"],
+
+Cell["Let\[CloseCurlyQuote]s put both together.", "Text",
+ CellChangeTimes->{{3.988827071944536*^9, 
+  3.9888270778533688`*^9}},ExpressionUUID->"337746f8-262d-d94f-8dae-\
+330e3f0c514e"],
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"Grid", "[", 
+    RowBox[{"{", 
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"r\[Theta]Plot", "[", 
+          RowBox[{"5", ",", 
+           RowBox[{"2", "Pi"}], ",", "dr", ",", "d\[Theta]"}], "]"}], ",", 
+         RowBox[{"originalBox", "[", 
+          RowBox[{"r", ",", "\[Theta]", ",", "dr", ",", "d\[Theta]"}], 
+          "]"}]}], "]"}], ",", "\[IndentingNewLine]", 
+       RowBox[{"Show", "[", 
+        RowBox[{
+         RowBox[{"xyPlot", "[", 
+          RowBox[{"5", ",", 
+           RowBox[{"2", "Pi"}], ",", "dr", ",", "d\[Theta]"}], "]"}], ",", 
+         RowBox[{"transformedSector", "[", 
+          RowBox[{"r", ",", "\[Theta]", ",", "dr", ",", "d\[Theta]"}], "]"}], 
+         ",", 
+         RowBox[{"transformedBox", "[", 
+          RowBox[{"r", ",", "\[Theta]", ",", "dr", ",", "d\[Theta]"}], "]"}], 
+         ",", 
+         RowBox[{"ImageSize", "->", "Medium"}]}], "]"}]}], 
+      "\[IndentingNewLine]", "}"}], "}"}], "]"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\[Theta]", ",", 
+       RowBox[{"Pi", "/", "3"}]}], "}"}], ",", "0", ",", 
+     RowBox[{"2", "Pi"}]}], "}"}], ",", "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"r", ",", "2"}], "}"}], ",", "0", ",", "5"}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"dr", ",", "1"}], "}"}], ",", "0.01", ",", "1"}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"d\[Theta]", ",", 
+       RowBox[{"Pi", "/", "6"}]}], "}"}], ",", "0.01", ",", 
+     RowBox[{"Pi", "/", "3"}]}], "}"}]}], "\[IndentingNewLine]", 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.98882500880147*^9, 3.9888250719346504`*^9}, {
+  3.9888251336509514`*^9, 3.9888251546907387`*^9}, {3.98882591447678*^9, 
+  3.988825914703972*^9}, {3.988826670893894*^9, 3.988826682650831*^9}, {
+  3.9888268554429665`*^9, 3.9888268567229614`*^9}},
+ CellLabel->"In[80]:=",ExpressionUUID->"803f06d6-8f98-0045-9824-b8069ab4b17e"]
+}, Open  ]]
+},
+WindowSize->{1440, 777.75},
+WindowMargins->{{1274, Automatic}, {Automatic, -6}},
+Magnification:>1.6 Inherited,
+FrontEndVersion->"14.3 for Microsoft Windows (64-bit) (July 8, 2025)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"a386af30-3b8d-db4a-8fb5-93b6afe1eee6"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[576, 22, 169, 3, 105, "Section",ExpressionUUID->"6331bc7f-794d-e24b-880f-b2703942bf69"],
+Cell[748, 27, 332, 7, 54, "Text",ExpressionUUID->"eff09e15-2ed3-9541-9235-17649cc27581"],
+Cell[1083, 36, 2253, 55, 222, "Input",ExpressionUUID->"8db93630-5173-cd42-8048-24e6819678fc",
+ InitializationCell->True],
+Cell[3339, 93, 311, 6, 54, "Text",ExpressionUUID->"277e983b-1acd-764f-be29-0d2fad34e372"],
+Cell[3653, 101, 2223, 53, 222, "Input",ExpressionUUID->"ee8239b3-dcf6-5c46-b965-a10b241a9ce0",
+ InitializationCell->True],
+Cell[5879, 156, 251, 6, 54, "Text",ExpressionUUID->"0d395891-b440-8e49-a9d3-7a3e59d5e09f"],
+Cell[6133, 164, 2364, 58, 222, "Input",ExpressionUUID->"e2abfa22-a417-3f4d-beba-19ded7000156",
+ InitializationCell->True],
+Cell[8500, 224, 225, 5, 54, "Text",ExpressionUUID->"c8b9f74b-77c6-3d4f-a573-8afcd4db5d2e"],
+Cell[8728, 231, 1780, 41, 131, "Input",ExpressionUUID->"c73ff5e9-3990-a747-92ed-75fe65a5271a",
+ InitializationCell->True],
+Cell[10511, 274, 298, 6, 54, "Text",ExpressionUUID->"a06dac0d-18ed-2d4e-a8d5-c611d44b08cb"],
+Cell[10812, 282, 2501, 55, 222, "Input",ExpressionUUID->"3a44f58d-144e-334f-bc1d-7cc00711d580",
+ InitializationCell->True],
+Cell[13316, 339, 1454, 30, 101, "Input",ExpressionUUID->"5c6e4362-ad8b-ab4e-9b6f-4f2a469c29e0",
+ InitializationCell->True]
+}, Closed]],
+Cell[CellGroupData[{
+Cell[14807, 374, 152, 3, 81, "Section",ExpressionUUID->"a853d71b-dac3-7e43-ad73-b36cc139d69f"],
+Cell[14962, 379, 217, 4, 54, "Text",ExpressionUUID->"19d4319a-13a4-ad4d-aaba-e5fd720c8b19"],
+Cell[15182, 385, 1378, 37, 227, "Input",ExpressionUUID->"c6d6d049-dfc4-284a-8974-00a1f08cf6f8"],
+Cell[16563, 424, 216, 4, 54, "Text",ExpressionUUID->"7230eecd-f850-b643-a77c-5c0638fd840a"],
+Cell[16782, 430, 1548, 39, 227, "Input",ExpressionUUID->"67774e63-230d-b944-b387-23e9cce9f0ae"],
+Cell[18333, 471, 185, 3, 54, "Text",ExpressionUUID->"337746f8-262d-d94f-8dae-330e3f0c514e"],
+Cell[18521, 476, 2207, 55, 319, "Input",ExpressionUUID->"803f06d6-8f98-0045-9824-b8069ab4b17e"]
+}, Open  ]]
+}
+]
+*)
+
